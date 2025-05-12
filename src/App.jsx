@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from './utils/iconUtils';
 import Home from './pages/Home';
+import Invoices from './pages/Invoices';
 import NotFound from './pages/NotFound';
 import Clients from './pages/Clients';
 import Projects from './pages/Projects';
@@ -187,7 +188,7 @@ function App() {
                   <Route path="/time" element={<Home />} />
                   <Route path="/clients" element={<Clients />} />
                   <Route path="/projects" element={<Projects />} />
-                  <Route path="/invoices" element={<Home />} />
+                  <Route path="/invoices" element={<Invoices />} />
                   <Route path="/expenses" element={<Home />} />
                   <Route path="/reports" element={<Home />} />
                   <Route path="/documents" element={<Home />} />
