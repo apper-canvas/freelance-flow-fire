@@ -1,4 +1,5 @@
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -162,7 +163,7 @@ function App() {
                   location.pathname === link.to ? 'bg-primary/10 text-primary font-medium' : ''
                 }`}
               >
-                {React.createElement(link.icon, { size: 20 })}
+                <link.icon size={20} />
               </Link>
             ))}
           </div>
