@@ -6,6 +6,7 @@ import getIcon from './utils/iconUtils';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Clients from './pages/Clients';
+import Projects from './pages/Projects';
 
 function App() {
   const [darkMode, setDarkMode] = useState(
@@ -137,7 +138,7 @@ function App() {
                         location.pathname === link.to ? 'bg-primary/10 text-primary font-medium' : ''
                       }`}
                     >
-                      <link.icon size={20} />
+                      {React.createElement(link.icon, { size: 20 })}
                       <span>{link.label}</span>
                     </Link>
                   ))}
@@ -164,9 +165,9 @@ function App() {
                 <link.icon size={20} />
                 <span>{link.label}</span>
               </Link>
-            ))}
+                  <Route path="/time" element={<Home />} /> 
           </div>
-        </aside>
+                  <Route path="/projects" element={<Projects />} />
         
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto">
