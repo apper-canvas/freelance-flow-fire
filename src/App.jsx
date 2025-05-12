@@ -163,7 +163,8 @@ function App() {
                   location.pathname === link.to ? 'bg-primary/10 text-primary font-medium' : ''
                 }`}
               >
-                <link.icon size={20} />
+                {React.createElement(link.icon, { size: 20 })}
+                <span>{link.label}</span>
               </Link>
             ))}
           </div>
