@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import getIcon from './utils/iconUtils';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import Clients from './pages/Clients';
 
 function App() {
   const [darkMode, setDarkMode] = useState(
@@ -182,7 +183,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   {/* These routes would be implemented in a full application */}
                   <Route path="/time" element={<Home />} />
-                  <Route path="/clients" element={<Home />} />
+                  <Route path="/clients" element={<Clients />} />
                   <Route path="/projects" element={<Home />} />
                   <Route path="/invoices" element={<Home />} />
                   <Route path="/expenses" element={<Home />} />

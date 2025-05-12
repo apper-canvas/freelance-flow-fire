@@ -57,6 +57,16 @@ function rootReducer(state = initialState, action) {
         ...state,
         timeEntries: [...state.timeEntries, action.payload]
       };
+    case 'ADD_CLIENT':
+      return {
+        ...state,
+        clients: [...state.clients, action.payload]
+      };
+    case 'UPDATE_CLIENT':
+      return {
+        ...state,
+        clients: state.clients.map(client => client.id === action.payload.id ? action.payload : client)
+      };
     default:
       return state;
   }
