@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Invoices from './pages/Invoices';
 import NotFound from './pages/NotFound';
 import Clients from './pages/Clients';
+import Documents from './pages/Documents';
 import Reports from './pages/Reports';
 import Expenses from './pages/Expenses';
 import Projects from './pages/Projects';
@@ -192,7 +193,7 @@ function App() {
                   <Route path="/invoices" element={<Invoices />} />
                   <Route path="/expenses" element={<Expenses />} />
                   <Route path="/reports" element={<Reports />} />
-                  <Route path="/documents" element={<Home />} />
+                  <Route path="/documents" element={<Documents />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </motion.div>

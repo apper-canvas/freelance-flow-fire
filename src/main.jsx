@@ -50,6 +50,13 @@ const initialState = {
     { id: '1', name: 'Contract.pdf', projectId: '1', clientId: '1', fileType: 'application/pdf', folder: 'Contracts' },
     { id: '2', name: 'Logo Assets.zip', projectId: '3', clientId: '2', fileType: 'application/zip', folder: 'Deliverables' }
   ],
+  folders: [
+    { id: 'folder-1', name: 'Contracts', parentId: 'root', created: '2023-05-15T10:00:00' },
+    { id: 'folder-2', name: 'Proposals', parentId: 'root', created: '2023-05-15T10:00:00' },
+    { id: 'folder-3', name: 'Client Assets', parentId: 'root', created: '2023-05-15T10:00:00' }
+  ],
+  tags: ['Contract', 'Proposal', 'Invoice', 'Legal', 'Design', 'Marketing'],
+  
   user: {
     name: 'Alex Johnson',
     email: 'alex@freelanceflow.com',
@@ -88,6 +95,26 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         projects: state.projects.map(project => project.id === action.payload.id ? action.payload : project)
+      };
+    case 'ADD_DOCUMENT':
+      return {
+        ...state,
+        documents: [...state.documents, action.payload]
+      };
+    case 'UPDATE_DOCUMENT':
+      return {
+        ...state,
+        documents: state.documents.map(doc => doc.id === action.payload.id ? action.payload : doc)
+      };
+    case 'DELETE_DOCUMENT':
+      return {
+        ...state,
+        documents: state.documents.filter(doc => doc.id !== action.payload)
+      };
+    case 'ADD_FOLDER':
+      return {
+        ...state,
+        folders: [...state.folders, action.payload]
       };
     default:
       return state;
