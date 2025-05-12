@@ -163,12 +163,11 @@ function App() {
                 }`}
               >
                 <link.icon size={20} />
-                <span>{link.label}</span>
+                {React.createElement(link.icon, { size: 20 })}
               </Link>
                   <Route path="/time" element={<Home />} /> 
+            ))}
           </div>
-                  <Route path="/projects" element={<Projects />} />
-        
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto">
           <div className="container mx-auto px-4 py-6">
@@ -185,7 +184,7 @@ function App() {
                   {/* These routes would be implemented in a full application */}
                   <Route path="/time" element={<Home />} />
                   <Route path="/clients" element={<Clients />} />
-                  <Route path="/projects" element={<Home />} />
+                  <Route path="/projects" element={<Projects />} />
                   <Route path="/invoices" element={<Home />} />
                   <Route path="/expenses" element={<Home />} />
                   <Route path="/reports" element={<Home />} />
