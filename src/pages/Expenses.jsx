@@ -537,6 +537,285 @@ const Expenses = () => {
       </div>
     </div>
   );
+
+    {/* Add/Edit Expense Form Modal */}
+    {showForm && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div 
+          className="bg-white dark:bg-surface-800 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="sticky top-0 bg-white dark:bg-surface-800 px-6 py-4 border-b border-surface-200 dark:border-surface-700 flex justify-between items-center">
+            <h2 className="text-xl font-semibold">
+              {selectedExpense ? 'Edit Expense' : 'Add New Expense'}
+            </h2>
+            <button 
+              onClick={() => setShowForm(false)}
+              className="p-2 rounded-full hover:bg-surface-100 dark:hover:bg-surface-700"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+              {/* Basic Information */}
+              <div className="md:col-span-2">
+                <h3 className="text-lg font-medium mb-3">Basic Information</h3>
+              </div>
+
+              {/* Description */}
+              <div className="form-group md:col-span-2">
+                <label htmlFor="description" className="form-label">Description *</label>
+                <input
+                  type="text"
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="input"
+                  placeholder="What was this expense for?"
+                  required
+                />
+              </div>
+
+              {/* Date */}
+              <div className="form-group">
+                <label htmlFor="date" className="form-label">Date *</label>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  className="input"
+                  required
+                />
+              </div>
+
+              {/* Category */}
+              <div className="form-group">
+                <label htmlFor="category" className="form-label">Category *</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="select"
+                  required
+                >
+                  <option value="">Select a category</option>
+                  {expenseCategories.map(category => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Amount */}
+              <div className="form-group">
+                <label htmlFor="amount" className="form-label">Amount ($) *</label>
+                <input
+                  type="number"
+                  id="amount"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleChange}
+                  className="input"
+                  placeholder="0.00"
+                  step="0.01"
+                  min="0"
+                  required
+                />
+              </div>
+
+              {/* Tax Rate */}
+              <div className="form-group">
+                <label htmlFor="taxRate" className="form-label">Tax Rate</label>
+                <select
+                  id="taxRate"
+                  name="taxRate"
+                  value={formData.taxRate.id}
+                  onChange={handleChange}
+                  className="select"
+                >
+                  {taxRates.map(tax => (
+                    <option key={tax.id} value={tax.id}>
+                      {tax.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Custom Tax Rate */}
+              {formData.taxRate.id === 'custom' && (
+                <div className="form-group">
+                  <label htmlFor="customTaxRate" className="form-label">Custom Tax Rate (%)</label>
+                  <input
+                    type="number"
+                    id="customTaxRate"
+                    name="customTaxRate"
+                    value={formData.customTaxRate}
+                    onChange={handleChange}
+                    className="input"
+                    placeholder="Enter percentage"
+                    step="0.01"
+                    min="0"
+                    max="100"
+                    required
+                  />
+                </div>
+              )}
+
+              {/* Billable */}
+              <div className="form-group md:col-span-2">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="billable"
+                    name="billable"
+                    checked={formData.billable}
+                    onChange={handleChange}
+                    className="mr-2 h-4 w-4"
+                  />
+                  <label htmlFor="billable" className="form-label m-0">
+                    Mark as billable expense
+                  </label>
+                </div>
+              </div>
+
+              {/* Association */}
+              <div className="md:col-span-2 mt-2">
+                <h3 className="text-lg font-medium mb-3">Project & Client Association</h3>
+              </div>
+
+              {/* Client */}
+              <div className="form-group">
+                <label htmlFor="clientId" className="form-label">Client</label>
+                <select
+                  id="clientId"
+                  name="clientId"
+                  value={formData.clientId}
+                  onChange={handleChange}
+                  className="select"
+                >
+                  <option value="">Not associated with a client</option>
+                  {clients.map(client => (
+                    <option key={client.id} value={client.id}>{client.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Project */}
+              <div className="form-group">
+                <label htmlFor="projectId" className="form-label">Project</label>
+                <select
+                  id="projectId"
+                  name="projectId"
+                  value={formData.projectId}
+                  onChange={handleChange}
+                  className="select"
+                  disabled={!formData.clientId}
+                >
+                  <option value="">Not associated with a project</option>
+                  {filteredProjects.map(project => (
+                    <option key={project.id} value={project.id}>{project.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Receipt Upload */}
+              <div className="md:col-span-2 mt-2">
+                <h3 className="text-lg font-medium mb-3">Receipt</h3>
+                <div 
+                  className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-6 text-center"
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                >
+                  {formData.receiptPreview ? (
+                    <div className="relative">
+                      <img 
+                        src={formData.receiptPreview} 
+                        alt="Receipt preview" 
+                        className="max-h-64 mx-auto rounded-lg" 
+                      />
+                      <button 
+                        type="button"
+                        onClick={() => setFormData({...formData, receipt: null, receiptPreview: null})}
+                        className="absolute top-2 right-2 bg-surface-800 bg-opacity-70 text-white p-1 rounded-full"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload size={32} className="mx-auto text-surface-400" />
+                      <p className="mt-2 text-surface-600 dark:text-surface-400">
+                        Drag & drop a receipt image here, or <button 
+                          type="button" 
+                          className="text-primary hover:underline"
+                          onClick={() => fileInputRef.current.click()}
+                        >browse</button>
+                      </p>
+                      <p className="text-xs text-surface-500 mt-1">Supported formats: JPEG, PNG, PDF (max 5MB)</p>
+                      <input 
+                        type="file" 
+                        ref={fileInputRef}
+                        onChange={handleFileUpload}
+                        accept="image/jpeg,image/png,application/pdf"
+                        className="hidden"
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => setShowForm(false)}
+                className="btn border border-surface-300 dark:border-surface-600"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+              >
+                {selectedExpense ? 'Update Expense' : 'Save Expense'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
+
+    {/* Delete Confirmation Modal */}
+    {showDeleteConfirm && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="bg-white dark:bg-surface-800 rounded-xl max-w-md w-full shadow-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">Confirm Deletion</h3>
+          <p className="mb-6">
+            Are you sure you want to delete this expense? This action cannot be undone.
+          </p>
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={() => setShowDeleteConfirm(false)}
+              className="btn border border-surface-300 dark:border-surface-600"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDelete}
+              className="btn bg-red-500 hover:bg-red-600 text-white"
+            >
+              Delete Expense
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
 };
 
 export default Expenses;
