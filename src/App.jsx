@@ -166,6 +166,8 @@ function App() {
               </Link>
             ))}
           </div>
+        </aside>
+        
         {/* Main Content Area */}
         <main className="flex-1 overflow-y-auto">
           <div className="container mx-auto px-4 py-6">
