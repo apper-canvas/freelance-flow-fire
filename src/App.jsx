@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Invoices from './pages/Invoices';
 import NotFound from './pages/NotFound';
 import Clients from './pages/Clients';
+import Reports from './pages/Reports';
 import Expenses from './pages/Expenses';
 import Projects from './pages/Projects';
 
@@ -165,7 +166,8 @@ function App() {
                   location.pathname === link.to ? 'bg-primary/10 text-primary font-medium' : ''
                 }`}
               >
-                <link.icon size={20} />
+                {React.createElement(link.icon, { size: 20 })}
+                <span>{link.label}</span>
                 <span>{link.label}</span>
               </Link>
             ))}
@@ -191,7 +193,7 @@ function App() {
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/invoices" element={<Invoices />} />
                   <Route path="/expenses" element={<Expenses />} />
-                  <Route path="/reports" element={<Home />} />
+                  <Route path="/reports" element={<Reports />} />
                   <Route path="/documents" element={<Home />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
