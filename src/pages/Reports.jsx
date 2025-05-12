@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import Chart from 'react-apexcharts';
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'; 
 import { format, parseISO, startOfMonth, endOfMonth, subMonths, isWithinInterval } from 'date-fns';
 import { Download, FileText, Filter, PieChart, BarChart, LineChart, Calendar, DollarSign, Clock, Users, Briefcase } from 'lucide-react';
 
@@ -313,9 +313,63 @@ const Reports = () => {
   const clientChartSeries = calculateTimeUtilization().clientBreakdown.map(c => c.hours);
 
   // Handle report generation
-  const generateReport = () => {
+  const generateReport = () => {  
+    // Create a report object based on the active tab
+    let reportData = {};
+    let reportTitle = '';
+    
+    if (activeTab === 'financial') {
+      const financialMetrics = calculateFinancialMetrics();
+      reportData = {
+        title: 'Financial Report',
+        generatedAt: new Date().toISOString(),
+        dateRange: {
+          from: format(dateRange.start, 'yyyy-MM-dd'),
+          to: format(dateRange.end, 'yyyy-MM-dd')
+        },
+        summary: {
+          totalRevenue: financialMetrics.totalRevenue,
+          totalExpenses: financialMetrics.totalExpenses,
+          profit: financialMetrics.profit,
+          profitMargin: financialMetrics.profitMargin
+        },
+        monthlyData: financialMetrics.monthlyData
+      };
+      reportTitle = 'Financial_Report';
+    } else if (activeTab === 'time') {
+      const timeMetrics = calculateTimeUtilization();
+      reportData = {
+        title: 'Time Utilization Report',
+        generatedAt: new Date().toISOString(),
+        dateRange: {
+          from: format(dateRange.start, 'yyyy-MM-dd'),
+          to: format(dateRange.end, 'yyyy-MM-dd')
+        },
+        summary: {
+          totalHours: timeMetrics.totalHours,
+          billableHours: timeMetrics.billableHours,
+          nonBillableHours: timeMetrics.nonBillableHours,
+          billablePercentage: timeMetrics.billablePercentage
+        },
+        clientBreakdown: timeMetrics.clientBreakdown,
+        projectBreakdown: timeMetrics.projectBreakdown
+      };
+      reportTitle = 'Time_Utilization_Report';
+    } else if (activeTab === 'profitability') {
+      reportData = calculateProfitability();
+      reportTitle = 'Profitability_Report';
+    } else if (activeTab === 'custom') {
+      reportData = customReport;
+      reportTitle = 'Custom_Report';
+    }
+    
+    // Create a JSON string and convert to Blob
+    const jsonString = JSON.stringify(reportData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
     toast.success('Report generated successfully!', {
-      icon: "📊"
+      icon: '📊'
     });
   };
 
