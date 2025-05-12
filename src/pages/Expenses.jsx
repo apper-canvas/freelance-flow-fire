@@ -316,7 +316,7 @@ const Expenses = () => {
   };
   
   return (
-    <div className="space-y-6">
+    <div>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
@@ -535,11 +535,9 @@ const Expenses = () => {
           })
         )}
       </div>
-    </div>
-  );
 
-    {/* Add/Edit Expense Form Modal */}
-    {showForm && (
+      {/* Add/Edit Expense Form Modal */}
+      {showForm && (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div 
           className="bg-white dark:bg-surface-800 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-lg"
@@ -789,10 +787,10 @@ const Expenses = () => {
           </form>
         </div>
       </div>
-    )}
+      )}
 
-    {/* Delete Confirmation Modal */}
-    {showDeleteConfirm && (
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div className="bg-white dark:bg-surface-800 rounded-xl max-w-md w-full shadow-lg p-6">
           <h3 className="text-xl font-semibold mb-4">Confirm Deletion</h3>
@@ -815,7 +813,9 @@ const Expenses = () => {
           </div>
         </div>
       </div>
-    )}
+      )}
+    </div>
+  );
 };
 
 export default Expenses;
