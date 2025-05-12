@@ -169,7 +169,6 @@ function App() {
                 {React.createElement(link.icon, { size: 20 })}
                 <span>{link.label}</span>
               </Link>
-            ))}
           </div>
         </aside>
         
